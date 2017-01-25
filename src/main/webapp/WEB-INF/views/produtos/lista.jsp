@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>Lista de Produtos</h1>
-	
+	<p> ${sucesso} </p>
 	<table>
         <tr>
             <td>Título</td>
@@ -23,6 +23,7 @@
             <td>${produto.titulo}</td>
             <td>${produto.descricao}</td>
             <td>${produto.paginas}</td>
+            </br>
         </tr>
     </c:forEach>
     
