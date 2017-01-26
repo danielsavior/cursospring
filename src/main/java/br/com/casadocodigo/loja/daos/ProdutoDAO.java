@@ -22,6 +22,10 @@ public class ProdutoDAO {
 		manager.persist(p);
 	}
 	
+	public Produto find(int id){
+	    return manager.find(Produto.class, id);
+	}
+	
 	public List<Produto> listar(){
 	    return manager.createQuery("select p from Produto p").getResultList();
 	}
