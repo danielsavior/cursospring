@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
 import br.com.casadocodigo.loja.infra.FileSaver;
@@ -62,8 +63,8 @@ public class ProdutosController {
         return modelAndView;
     }
     
-    @RequestMapping("/detalhe")
-    public ModelAndView detalhe(int id){
+    @RequestMapping("/detalhe/{id}")
+    public ModelAndView detalhe(@PathVariable("id") int id){
         ModelAndView modelAndView = new ModelAndView("/produtos/detalhe");
         Produto produto = produtoDao.find(id);
         modelAndView.addObject("produto", produto);
