@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
@@ -20,7 +22,7 @@ import br.com.casadocodigo.loja.models.CarrinhoCompras;
 
 @EnableWebMvc
 @ComponentScan(basePackageClasses={HomeController.class,ProdutoDAO.class,FileSaver.class,CarrinhoCompras.class})
-public class AppWebConfiguration {
+public class AppWebConfiguration extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver(){
@@ -58,6 +60,12 @@ public class AppWebConfiguration {
 	@Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+	
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations(
+                "/resources/");
     }
 	
 }
