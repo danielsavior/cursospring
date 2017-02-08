@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.conf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.CacheManager;
@@ -15,6 +16,8 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
@@ -33,7 +36,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.google.common.cache.CacheBuilder;
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
-import br.com.casadocodigo.loja.daos.UsuarioDAO;
 import br.com.casadocodigo.loja.infra.FileSaver;
 import br.com.casadocodigo.loja.models.CarrinhoCompras;
 
@@ -119,6 +121,26 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter{
     @Bean
     public LocaleResolver localeResolver(){
         return new CookieLocaleResolver();
+    }
+    
+    @Bean
+    public MailSender mailSender(){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setUsername("chicolopes@gmail.com");
+        mailSender.setPassword("AtonioNunes");
+        mailSender.setPort(465);
+
+        Properties mailProperties = new Properties();
+        mailProperties.put("mail.smtp.auth", "true"); 
+        mailProperties.put("mail.smtp.port", "465"); 
+        mailProperties.put("mail.smtp.socketFactory.port", "465"); 
+        mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+        mailProperties.put("mail.smtp.socketFactory.fallback", "false"); 
+
+        mailSender.setJavaMailProperties(mailProperties);
+        return mailSender;
     }
 
 }
